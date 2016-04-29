@@ -36,3 +36,29 @@ apply plugin: 'javafx-gradle-plugin'
 jfx {
 	mainClass = 'org.softlang.company.MainApp'
 }
+
+//Try to enforce code style via save actions
+//Clean .settings folder on eclipseClean
+tasks.cleanEclipse.doLast {
+    delete("${project.projectDir}/.settings/")
+}
+
+//copy eclipse setting files on "gradle eclipse"
+tasks.eclipse.doLast {
+
+    //copy formatter name, save actions and defined newline files
+    copy{
+        from "${project.projectDir}/misc/settings/"
+        into "${project.projectDir}/.settings/"
+        include "org.eclipse.core.runtime.prefs"
+        include "org.eclipse.jdt.ui.prefs"
+    }
+
+    // append formatter settings to autocreated file
+    File formatterPrefs = file("${project.projectDir}/.settings/org.eclipse.jdt.core.prefs")
+    String line;
+    BufferedReader read = new BufferedReader(new FileReader("${project.projectDir}/misc/settings/org.eclipse.jdt.core.prefs"))
+    while ((line=read.readLine())!=null){
+       formatterPrefs.append(line+"\r\n")  
+   }
+}

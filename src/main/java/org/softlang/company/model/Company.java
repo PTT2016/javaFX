@@ -1,6 +1,5 @@
 package org.softlang.company.model;
 
-import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,13 +10,11 @@ import org.softlang.company.feature.Total;
 /**
  * A company has a name and consists of (possibly nested) departments.
  */
-public class Company implements Serializable, Cut, Total, Depth
+public class Company implements Cut, Total, Depth
 {
 
-	private static final long serialVersionUID = -200889592677165250L;
-
 	private String name;
-	private List<Department> depts = new LinkedList<Department>();
+	private List<Department> depts = new LinkedList<>();
 
 	public String getName()
 	{
@@ -37,20 +34,18 @@ public class Company implements Serializable, Cut, Total, Depth
 	@Override
 	public Double total()
 	{
-		// TODO: total implementation missing
-		return 0D;
+		return depts.stream().reduce(0D, (a, d) -> a + d.total(), (a, d) -> a + d);
 	}
 
 	@Override
 	public void cut()
 	{
-		// TODO: cut implementation missing
+		depts.stream().forEach(d -> d.cut());
 	}
 
 	@Override
 	public Integer departementDepth()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return depts.stream().reduce(0, (a, d) -> Math.max(a, d.departementDepth()), (a, d) -> Math.max(a, d));
 	}
 }

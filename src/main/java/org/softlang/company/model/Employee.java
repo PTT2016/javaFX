@@ -5,19 +5,18 @@ import org.softlang.company.feature.Total;
 
 public class Employee implements Cut, Total
 {
+	Double salary = 0D;
 
 	@Override
 	public Double total()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return salary;
 	}
 
 	@Override
 	public void cut()
 	{
-		// TODO Auto-generated method stub
-
+		salary /= 2;
 	}
 
 }

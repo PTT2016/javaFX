@@ -1,38 +1,50 @@
 package org.softlang.company.model;
 
-import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.softlang.company.feature.Cut;
 import org.softlang.company.feature.Depth;
 import org.softlang.company.feature.Total;
 
-public class Department implements Serializable, Cut, Total, Depth
+public class Department implements Cut, Total, Depth
 {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = -1099820314969607769L;
+	private List<Department> depts = new LinkedList<>();
+	private List<Employee> employees = new LinkedList<>();
+
+	private String name;
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
+	}
 
 	@Override
 	public Double total()
 	{
-		// TODO: total implementation missing
-		return 0D;
-	}
-
-	@Override
-	public Integer departementDepth()
-	{
-		// TODO Auto-generated method stub
-		return null;
+		Double dept = depts.stream().reduce(0D, (a, d) -> a + d.total(), (a, d) -> a + d);
+		Double emp = employees.stream().reduce(0D, (a, d) -> a + d.total(), (a, d) -> a + d);
+		return dept + emp;
 	}
 
 	@Override
 	public void cut()
 	{
-		// TODO Auto-generated method stub
+		depts.stream().forEach(d -> d.cut());
+		employees.stream().forEach(d -> d.cut());
+	}
 
+	@Override
+	public Integer departementDepth()
+	{
+		Integer depth = depts.stream().reduce(0, (a, d) -> Math.max(a, d.departementDepth()), (a, d) -> Math.max(a, d));
+		return 1 + depth;
 	}
 
 }

@@ -31,6 +31,11 @@ public class Company implements Cut, Total, Depth
 		return depts;
 	}
 
+	public void addDepts(Department d)
+	{
+		this.depts.add(d);
+	}
+
 	@Override
 	public Double total()
 	{

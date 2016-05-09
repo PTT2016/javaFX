@@ -7,11 +7,11 @@ import org.softlang.company.model.Company;
 import org.softlang.company.model.Department;
 import org.softlang.company.model.Employee;
 
-public class CutTest
+public class TotalTest
 {
 
 	@Test
-	public void testCut()
+	public void testTotal()
 	{
 		Company c = new Company();
 		Department d1 = new Department();
@@ -25,9 +25,8 @@ public class CutTest
 		e1.setSalary(122d);
 		e2.setSalary(124d);
 
-		c.cut();
 		double total = c.total();
-		assertEquals(246d / 2d, total, 0);
+		assertEquals(246d, total, 0);
 	}
 
 }

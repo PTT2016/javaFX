@@ -7,11 +7,11 @@ import org.softlang.company.model.Company;
 import org.softlang.company.model.Department;
 import org.softlang.company.model.Employee;
 
-public class CutTest
+public class DepthTest
 {
 
 	@Test
-	public void testCut()
+	public void testDepth()
 	{
 		Company c = new Company();
 		Department d1 = new Department();
@@ -22,12 +22,9 @@ public class CutTest
 		d1.addDepts(d2);
 		d1.addEmployees(e1);
 		d2.addEmployees(e2);
-		e1.setSalary(122d);
-		e2.setSalary(124d);
 
-		c.cut();
-		double total = c.total();
-		assertEquals(246d / 2d, total, 0);
+		int depth = c.departementDepth();
+		assertEquals(2, depth, 0);
 	}
 
 }

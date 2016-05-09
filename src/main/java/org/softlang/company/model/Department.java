@@ -10,10 +10,9 @@ import org.softlang.company.feature.Total;
 public class Department implements Cut, Total, Depth
 {
 
+	private String name;
 	private List<Department> depts = new LinkedList<>();
 	private List<Employee> employees = new LinkedList<>();
-
-	private String name;
 
 	public String getName()
 	{
@@ -23,6 +22,26 @@ public class Department implements Cut, Total, Depth
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+
+	public List<Department> getDepts()
+	{
+		return depts;
+	}
+
+	public void addDepts(Department d)
+	{
+		this.depts.add(d);
+	}
+
+	public List<Employee> getEmployees()
+	{
+		return employees;
+	}
+
+	public void addEmployees(Employee e)
+	{
+		this.employees.add(e);
 	}
 
 	@Override

@@ -18,12 +18,12 @@ public class DepthTest
 		Department d2 = new Department();
 		Employee e1 = new Employee();
 		Employee e2 = new Employee();
-		c.addDepts(d1);
+		c.addDepartments(d1);
 		d1.addDepts(d2);
 		d1.addEmployees(e1);
 		d2.addEmployees(e2);
 
-		int depth = c.departementDepth();
+		int depth = c.departmentDepth();
 		assertEquals(2, depth, 0);
 	}
 

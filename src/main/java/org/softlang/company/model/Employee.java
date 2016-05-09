@@ -3,7 +3,10 @@ package org.softlang.company.model;
 import org.softlang.company.feature.Cut;
 import org.softlang.company.feature.Total;
 
-public class Employee implements Cut, Total
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+public class Employee implements Cut, Total, CompanyElement
 {
 	String name;
 	String address;
@@ -40,7 +43,7 @@ public class Employee implements Cut, Total
 	}
 
 	@Override
-	public Double total()
+	public double total()
 	{
 		return salary;
 	}
@@ -49,6 +52,18 @@ public class Employee implements Cut, Total
 	public void cut()
 	{
 		salary /= 2;
+	}
+
+	@Override
+	public String toString()
+	{
+		return getName();
+	}
+
+	@Override
+	public ObservableList<CompanyElement> getChildren()
+	{
+		return FXCollections.observableArrayList(this);
 	}
 
 }

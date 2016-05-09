@@ -14,7 +14,23 @@ public class Company implements Cut, Total, Depth
 {
 
 	private String name;
+	private List<Employee> employees = new LinkedList<>();
 	private List<Department> depts = new LinkedList<>();
+
+	public List<Employee> getEmployees()
+	{
+		return employees;
+	}
+
+	public void setEmployees(List<Employee> employees)
+	{
+		this.employees = employees;
+	}
+
+	public void setDepts(List<Department> depts)
+	{
+		this.depts = depts;
+	}
 
 	public String getName()
 	{
@@ -39,12 +55,15 @@ public class Company implements Cut, Total, Depth
 	@Override
 	public Double total()
 	{
-		return depts.stream().reduce(0D, (a, d) -> a + d.total(), (a, d) -> a + d);
+		Double emp = employees.stream().reduce(0D, (a, d) -> a + d.total(), (a, d) -> a + d);
+		Double dep = depts.stream().reduce(0D, (a, d) -> a + d.total(), (a, d) -> a + d);
+		return emp + dep;
 	}
 
 	@Override
 	public void cut()
 	{
+		employees.stream().forEach(d -> d.cut());
 		depts.stream().forEach(d -> d.cut());
 	}
 

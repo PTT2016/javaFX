@@ -5,7 +5,39 @@ import org.softlang.company.feature.Total;
 
 public class Employee implements Cut, Total
 {
-	Double salary = 0D;
+	String name;
+	String address;
+	Double salary;
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+
+	public String getAddress()
+	{
+		return address;
+	}
+
+	public void setAddress(String address)
+	{
+		this.address = address;
+	}
+
+	public Double getSalary()
+	{
+		return salary;
+	}
+
+	public void setSalary(Double salary)
+	{
+		this.salary = salary;
+	}
 
 	@Override
 	public Double total()

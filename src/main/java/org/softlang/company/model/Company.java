@@ -50,12 +50,15 @@ public class Company implements Cut, Total, Depth
 	@Override
 	public Double total()
 	{
-		return depts.stream().reduce(0D, (a, d) -> a + d.total(), (a, d) -> a + d);
+		Double emp = employees.stream().reduce(0D, (a, d) -> a + d.total(), (a, d) -> a + d);
+		Double dep = depts.stream().reduce(0D, (a, d) -> a + d.total(), (a, d) -> a + d);
+		return emp + dep;
 	}
 
 	@Override
 	public void cut()
 	{
+		employees.stream().forEach(d -> d.cut());
 		depts.stream().forEach(d -> d.cut());
 	}
 

@@ -12,8 +12,27 @@ public class Department implements Cut, Total, Depth
 
 	private List<Department> depts = new LinkedList<>();
 	private List<Employee> employees = new LinkedList<>();
-
 	private String name;
+
+	public List<Department> getDepts()
+	{
+		return depts;
+	}
+
+	public void setDepts(List<Department> depts)
+	{
+		this.depts = depts;
+	}
+
+	public List<Employee> getEmployees()
+	{
+		return employees;
+	}
+
+	public void setEmployees(List<Employee> employees)
+	{
+		this.employees = employees;
+	}
 
 	public String getName()
 	{
@@ -45,6 +64,12 @@ public class Department implements Cut, Total, Depth
 	{
 		Integer depth = depts.stream().reduce(0, (a, d) -> Math.max(a, d.departementDepth()), (a, d) -> Math.max(a, d));
 		return 1 + depth;
+	}
+
+	@Override
+	public String toString()
+	{
+		return getName();
 	}
 
 }

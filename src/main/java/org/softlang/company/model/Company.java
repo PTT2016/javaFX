@@ -14,7 +14,23 @@ public class Company implements Cut, Total, Depth
 {
 
 	private String name;
+	private List<Employee> employees = new LinkedList<>();
 	private List<Department> depts = new LinkedList<>();
+
+	public List<Employee> getEmployees()
+	{
+		return employees;
+	}
+
+	public void setEmployees(List<Employee> employees)
+	{
+		this.employees = employees;
+	}
+
+	public void setDepts(List<Department> depts)
+	{
+		this.depts = depts;
+	}
 
 	public String getName()
 	{

@@ -42,6 +42,12 @@ public class Company implements Cut, Total, Depth, CompanyElement
 		this.name = name;
 	}
 
+	/**
+	 * sums up the salaries of all employees of the company in a functional
+	 * manner
+	 *
+	 * @return a double containing all salaries
+	 */
 	@Override
 	public double total()
 	{
@@ -50,6 +56,10 @@ public class Company implements Cut, Total, Depth, CompanyElement
 		return emp + dep;
 	}
 
+	/**
+	 * cuts the salaries of all employees of the company in half
+	 *
+	 */
 	@Override
 	public void cut()
 	{
@@ -58,10 +68,10 @@ public class Company implements Cut, Total, Depth, CompanyElement
 	}
 
 	/**
-	 * sums up the salaries of all employees of the company in a functional
-	 * manner
-	 * 
-	 * @return a double containing all salaries
+	 * computes the nesting depth of departments as 1 + the maximum of the
+	 * depths of its sub-departments
+	 *
+	 * @return the depth of the department
 	 */
 	@Override
 	public int departmentDepth()
@@ -69,22 +79,12 @@ public class Company implements Cut, Total, Depth, CompanyElement
 		return departments.stream().reduce(0, (a, d) -> Math.max(a, d.departmentDepth()), (a, d) -> Math.max(a, d));
 	}
 
-	/**
-	 * cuts the salaries of all employees of the company in half
-	 *
-	 */
 	@Override
 	public String toString()
 	{
 		return getName();
 	}
 
-	/**
-	 * computes the nesting depth of departments as 1 + the maximum of the
-	 * depths of its sub-departments
-	 * 
-	 * @return the depth of the department
-	 */
 	@Override
 	public ObservableList<CompanyElement> getChildren()
 	{

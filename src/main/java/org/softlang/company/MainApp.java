@@ -3,8 +3,10 @@ package org.softlang.company;
 import java.io.IOException;
 
 import org.softlang.company.model.Company;
+import org.softlang.company.model.CompanyElement;
 import org.softlang.company.model.Department;
 import org.softlang.company.model.Employee;
+import org.softlang.company.view.DetailsController;
 import org.softlang.company.view.RootLayoutController;
 
 import javafx.application.Application;
@@ -12,6 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -22,10 +25,11 @@ public class MainApp extends Application
 
 	private ObservableList<Company> companyData = FXCollections.observableArrayList();
 
+	DetailsController detailsController;
+
 	@Override
 	public void start(Stage primaryStage)
 	{
-		System.out.println("start");
 		try
 		{
 			this.primaryStage = primaryStage;
@@ -47,11 +51,20 @@ public class MainApp extends Application
 		try
 		{
 			// Load root layout fxml
-			FXMLLoader fxmlLoader = new FXMLLoader(ClassLoader.getSystemResource("RootLayout.fxml"));
+			FXMLLoader fxmlLoader = new FXMLLoader(
+					ClassLoader.getSystemResource("org/softlang/company/view/RootLayout.fxml"));
 			BorderPane root = fxmlLoader.load();
 
 			RootLayoutController controller = fxmlLoader.getController();
 			controller.setMainApp(this);
+
+			// Load details panel fxml
+			fxmlLoader = new FXMLLoader(ClassLoader.getSystemResource("org/softlang/company/view/DetailsLayout.fxml"));
+			AnchorPane details = fxmlLoader.load();
+			root.setCenter(details);
+
+			detailsController = fxmlLoader.getController();
+			clearDetails();
 
 			// Show scene with root layout and css
 			Scene scene = new Scene(root);
@@ -70,19 +83,61 @@ public class MainApp extends Application
 		return companyData;
 	}
 
-	public void showCompany(Company company)
+	public void showDetails(CompanyElement element)
 	{
-		// TODO: show company panel with info
+		if (element == null)
+			clearDetails();
+		if (element instanceof Company)
+			showDetails((Company) element);
+		if (element instanceof Department)
+			showDetails((Department) element);
+		if (element instanceof Employee)
+			showDetails((Employee) element);
 	}
 
-	public void showDepartment(Department dept)
+	private void clearDetails()
 	{
-		// TODO: show department panel with info
+		detailsController.setContentLayoutX(-1);
+		detailsController.setTitle("");
+		detailsController.setNameLabel("");
+		detailsController.setName("");
+		detailsController.setAddressLabel("");
+		detailsController.setAddress("");
+		detailsController.setSalaryLabel("");
+		detailsController.setSalary("");
 	}
 
-	public void showEmployee(Employee employee)
+	private void showDetails(Company company)
 	{
-		// TODO: show employee panel with info
+		clearDetails();
+		String name = company.getName();
+		detailsController.setTitle("Company");
+		detailsController.setNameLabel("Name:");
+		detailsController.setName(name == null ? "" : name);
+	}
+
+	private void showDetails(Department department)
+	{
+		clearDetails();
+		String name = department.getName();
+		detailsController.setTitle("Department");
+		detailsController.setNameLabel("Name:");
+		detailsController.setName(name == null ? "" : name);
+	}
+
+	private void showDetails(Employee employee)
+	{
+		clearDetails();
+		String name = employee.getName();
+		String address = employee.getAddress();
+		String salary = "" + employee.getSalary();
+		detailsController.setTitle("Employee");
+		detailsController.setNameLabel("Name:");
+		detailsController.setName(name == null ? "" : name);
+		detailsController.setAddressLabel("Address:");
+		detailsController.setAddress(address == null ? "" : address);
+		detailsController.setSalaryLabel("Salary:");
+		detailsController.setSalary(salary);
 	}
 
 	public static void main(String[] args)
@@ -100,10 +155,12 @@ public class MainApp extends Application
 		Employee e1 = new Employee();
 		e1.setSalary(600d);
 		e1.setName("Steffen Kutscher");
+		e1.setAddress("D-55430 Oberwesel, Deutschland");
 		d1.getEmployees().add(e1);
 		Employee e2 = new Employee();
 		e2.setSalary(500d);
 		e2.setName("Lukas Christmann");
+		e2.setAddress("Deutschland");
 		d1.getEmployees().add(e2);
 
 		c.getDepartments().add(d1);

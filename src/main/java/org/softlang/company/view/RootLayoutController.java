@@ -44,6 +44,8 @@ public class RootLayoutController
 	{
 		System.out.println("RootLayoutController activated.");
 		treeView.setShowRoot(false);
+		treeView.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> mainApp.showDetails(newValue.getValue()));
 	}
 
 	public void setMainApp(MainApp app)

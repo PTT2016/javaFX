@@ -1,22 +1,38 @@
 package org.softlang.company.model;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.softlang.company.feature.Cut;
 import org.softlang.company.feature.Depth;
 import org.softlang.company.feature.Total;
 
-public class Department implements Cut, Total, Depth
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+public class Department implements Cut, Total, Depth, CompanyElement
 {
 
-	private String name;
-	private List<Department> depts = new LinkedList<>();
-	private List<Employee> employees = new LinkedList<>();
+	private String name = "";
 
-	public String getName()
+	private ObservableList<Department> departments = FXCollections.observableArrayList();
+	private ObservableList<Employee> employees = FXCollections.observableArrayList();
+
+	public ObservableList<Department> getDepartments()
 	{
-		return name;
+		return departments;
+	}
+
+	public ObservableList<Employee> getEmployees()
+	{
+		return employees;
+	}
+
+	public void addDepts(Department d)
+	{
+		this.departments.add(d);
+	}
+
+	public void addEmployees(Employee e)
+	{
+		this.employees.add(e);
 	}
 
 	public void setName(String name)
@@ -24,24 +40,9 @@ public class Department implements Cut, Total, Depth
 		this.name = name;
 	}
 
-	public List<Department> getDepts()
+	public String getName()
 	{
-		return depts;
-	}
-
-	public void addDepts(Department d)
-	{
-		this.depts.add(d);
-	}
-
-	public List<Employee> getEmployees()
-	{
-		return employees;
-	}
-
-	public void addEmployees(Employee e)
-	{
-		this.employees.add(e);
+		return name;
 	}
 
 	/**
@@ -51,9 +52,9 @@ public class Department implements Cut, Total, Depth
 	 *         in the first level
 	 */
 	@Override
-	public Double total()
+	public double total()
 	{
-		Double dept = depts.stream().reduce(0D, (a, d) -> a + d.total(), (a, d) -> a + d);
+		Double dept = departments.stream().reduce(0D, (a, d) -> a + d.total(), (a, d) -> a + d);
 		Double emp = employees.stream().reduce(0D, (a, d) -> a + d.total(), (a, d) -> a + d);
 		return dept + emp;
 	}
@@ -64,7 +65,7 @@ public class Department implements Cut, Total, Depth
 	@Override
 	public void cut()
 	{
-		depts.stream().forEach(d -> d.cut());
+		departments.stream().forEach(d -> d.cut());
 		employees.stream().forEach(d -> d.cut());
 	}
 
@@ -74,10 +75,20 @@ public class Department implements Cut, Total, Depth
 	 * @return an integer containing the depth
 	 */
 	@Override
-	public Integer departementDepth()
+	public int departmentDepth()
 	{
-		Integer depth = depts.stream().reduce(0, (a, d) -> Math.max(a, d.departementDepth()), (a, d) -> Math.max(a, d));
+		Integer depth = departments.stream().reduce(0, (a, d) -> Math.max(a, d.departmentDepth()),
+				(a, d) -> Math.max(a, d));
 		return 1 + depth;
+	}
+
+	@Override
+	public ObservableList<CompanyElement> getChildren()
+	{
+		ObservableList<CompanyElement> children = FXCollections.observableArrayList();
+		children.addAll(getEmployees());
+		children.addAll(getDepartments());
+		return children;
 	}
 
 }

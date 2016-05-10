@@ -32,6 +32,12 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
+jar {
+	manifest {
+		attributes 'Main-Class': 'org.softlang.company.MainApp'
+	}
+}
+
 apply plugin: 'javafx-gradle-plugin'
 jfx {
 	mainClass = 'org.softlang.company.MainApp'

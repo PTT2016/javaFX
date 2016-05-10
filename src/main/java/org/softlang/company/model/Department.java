@@ -45,6 +45,12 @@ public class Department implements Cut, Total, Depth, CompanyElement
 		return name;
 	}
 
+	/**
+	 * sum up the salaries of all employees of a specific departement
+	 *
+	 * @return the sum of the salaries of all subdepartements and all employees
+	 *         in the first level
+	 */
 	@Override
 	public double total()
 	{
@@ -53,6 +59,9 @@ public class Department implements Cut, Total, Depth, CompanyElement
 		return dept + emp;
 	}
 
+	/**
+	 * cuts the salaries of all employees of a specific departement in half
+	 */
 	@Override
 	public void cut()
 	{
@@ -60,6 +69,11 @@ public class Department implements Cut, Total, Depth, CompanyElement
 		employees.stream().forEach(d -> d.cut());
 	}
 
+	/**
+	 * computes the depth of a specific departement
+	 * 
+	 * @return an integer containing the depth
+	 */
 	@Override
 	public int departmentDepth()
 	{

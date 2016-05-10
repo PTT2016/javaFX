@@ -42,6 +42,12 @@ public class Company implements Cut, Total, Depth, CompanyElement
 		this.name = name;
 	}
 
+	/**
+	 * sums up the salaries of all employees of the company in a functional
+	 * manner
+	 *
+	 * @return a double containing all salaries
+	 */
 	@Override
 	public double total()
 	{
@@ -50,6 +56,10 @@ public class Company implements Cut, Total, Depth, CompanyElement
 		return emp + dep;
 	}
 
+	/**
+	 * cuts the salaries of all employees of the company in half
+	 *
+	 */
 	@Override
 	public void cut()
 	{
@@ -57,6 +67,12 @@ public class Company implements Cut, Total, Depth, CompanyElement
 		departments.stream().forEach(d -> d.cut());
 	}
 
+	/**
+	 * computes the nesting depth of departments as 1 + the maximum of the
+	 * depths of its sub-departments
+	 *
+	 * @return the depth of the department
+	 */
 	@Override
 	public int departmentDepth()
 	{

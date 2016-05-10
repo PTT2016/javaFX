@@ -39,12 +39,20 @@ public class Employee implements Cut, Total
 		this.salary = salary;
 	}
 
+	/**
+	 * the salary of a single employee
+	 * 
+	 * @return the salary
+	 */
 	@Override
 	public Double total()
 	{
 		return salary;
 	}
 
+	/**
+	 * cuts the salary of a single employee in half
+	 */
 	@Override
 	public void cut()
 	{

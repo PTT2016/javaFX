@@ -1,8 +1,12 @@
 package org.softlang.company.model;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public interface CompanyElement
 {
-	ObservableList<CompanyElement> getChildren();
+	default ObservableList<CompanyElement> getChildren()
+	{
+		return FXCollections.observableArrayList();
+	}
 }

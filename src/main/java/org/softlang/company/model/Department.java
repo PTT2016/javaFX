@@ -77,4 +77,10 @@ public class Department implements Cut, Total, Depth, CompanyElement
 		return children;
 	}
 
+	@Override
+	public String toString()
+	{
+		return getName();
+	}
+
 }

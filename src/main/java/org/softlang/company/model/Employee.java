@@ -3,9 +3,6 @@ package org.softlang.company.model;
 import org.softlang.company.feature.Cut;
 import org.softlang.company.feature.Total;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 public class Employee implements Cut, Total, CompanyElement
 {
 	String name;
@@ -58,12 +55,6 @@ public class Employee implements Cut, Total, CompanyElement
 	public String toString()
 	{
 		return getName();
-	}
-
-	@Override
-	public ObservableList<CompanyElement> getChildren()
-	{
-		return FXCollections.observableArrayList(this);
 	}
 
 }

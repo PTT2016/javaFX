@@ -96,26 +96,43 @@ public class MainApp extends Application
 		c.setName(name);
 
 		Department d1 = new Department();
-		d1.setName("Einigkeit");
+		d1.setName("Department 1");
 		Employee e1 = new Employee();
-		e1.setSalary(200d);
+		e1.setSalary(600d);
+		e1.setName("Steffen Kutscher");
 		d1.getEmployees().add(e1);
 		Employee e2 = new Employee();
-		e2.setSalary(400d);
+		e2.setSalary(500d);
+		e2.setName("Lukas Christmann");
 		d1.getEmployees().add(e2);
 
 		c.getDepartments().add(d1);
 
 		Department d2 = new Department();
-		d1.setName("Freiheit");
+		d2.setName("Department 2");
 		Employee e3 = new Employee();
 		e3.setSalary(300d);
+		e3.setName("Pascal Lief");
 		d2.getEmployees().add(e3);
 		Employee e4 = new Employee();
-		e4.setSalary(600d);
+		e4.setSalary(400d);
+		e4.setName("Lars Erve");
 		d2.getEmployees().add(e4);
 
 		c.getDepartments().add(d2);
+
+		Department d3 = new Department();
+		d3.setName("Department 3");
+		Employee e5 = new Employee();
+		e5.setSalary(200d);
+		e5.setName("Biggy");
+		d3.getEmployees().add(e5);
+		Employee e6 = new Employee();
+		e6.setSalary(100d);
+		e6.setName("Willy");
+		d3.getEmployees().add(e6);
+
+		d1.getDepartments().add(d3);
 
 		return c;
 	}

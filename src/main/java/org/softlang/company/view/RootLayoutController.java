@@ -1,7 +1,6 @@
 package org.softlang.company.view;
 
 import org.softlang.company.MainApp;
-import org.softlang.company.model.Company;
 import org.softlang.company.model.CompanyElement;
 
 import javafx.collections.ListChangeListener;
@@ -14,9 +13,11 @@ public class RootLayoutController
 	@FXML
 	private TreeView<CompanyElement> treeView;
 
+	protected ListChangeListener<CompanyElement> treeRebuilder = (ListChangeListener<CompanyElement>) c -> rebuildTreeView();
+
 	private MainApp mainApp;
 
-	public static class CompanyTreeItem extends TreeItem<CompanyElement>
+	public class CompanyTreeItem extends TreeItem<CompanyElement>
 	{
 		CompanyElement element;
 
@@ -24,10 +25,17 @@ public class RootLayoutController
 		{
 			super(element);
 			this.setExpanded(true);
+			element.addListChangeListener(treeRebuilder);
 
-			element.getChildren().stream()//
-					.map(child -> new CompanyTreeItem(child))//
+			element.getChildren().stream().map(child -> new CompanyTreeItem(child))
 					.forEach(item -> this.getChildren().add(item));
+		}
+
+		@Override
+		protected void finalize() throws Throwable
+		{
+			element.removeListChangeListener(treeRebuilder);
+			super.finalize();
 		}
 	}
 
@@ -41,14 +49,13 @@ public class RootLayoutController
 	public void setMainApp(MainApp app)
 	{
 		this.mainApp = app;
-		app.getCompanyData().addListener((ListChangeListener<Company>) c -> rebuildTreeView());
+		app.getCompanyData().addListener(treeRebuilder);
 	}
 
 	private void rebuildTreeView()
 	{
 		TreeItem<CompanyElement> root = new TreeItem<>();
-		mainApp.getCompanyData().stream()//
-				.forEach(company -> root.getChildren().add(new CompanyTreeItem(company)));
+		mainApp.getCompanyData().stream().forEach(company -> root.getChildren().add(new CompanyTreeItem(company)));
 		treeView.setRoot(root);
 	}
 

@@ -5,6 +5,7 @@ import org.softlang.company.feature.Depth;
 import org.softlang.company.feature.Total;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
 /**
@@ -92,6 +93,20 @@ public class Company implements Cut, Total, Depth, CompanyElement
 		children.addAll(getEmployees());
 		children.addAll(getDepartments());
 		return children;
+	}
+
+	@Override
+	public void addListChangeListener(ListChangeListener<CompanyElement> listener)
+	{
+		employees.addListener(listener);
+		departments.addListener(listener);
+	}
+
+	@Override
+	public void removeListChangeListener(ListChangeListener<CompanyElement> listener)
+	{
+		employees.removeListener(listener);
+		departments.removeListener(listener);
 	}
 
 }

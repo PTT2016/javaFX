@@ -14,3 +14,4 @@ Features:
 * Pascal Lief
 * Brigitte Pede
 * Lars Erve
+* Willy Koop

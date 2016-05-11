@@ -42,6 +42,11 @@ public abstract class CompanyElement
 		return listeners.remove(l);
 	}
 
+	public void removeAllChangeListeners()
+	{
+		listeners.clear();
+	}
+
 	public void notifyNameChange()
 	{
 		listeners.stream().forEach(l -> l.notifyNameChanged());

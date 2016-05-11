@@ -5,7 +5,6 @@ import org.softlang.company.model.CompanyElement;
 import org.softlang.company.model.NameChangeListener;
 
 import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -100,7 +99,6 @@ public class RootLayoutController
 		@Override
 		public String toString()
 		{
-			// TODO Auto-generated method stub
 			return getItem().toString();
 		}
 	}
@@ -119,8 +117,6 @@ public class RootLayoutController
 	 */
 	public class CompanyTreeItem extends TreeItem<CompanyElement>
 	{
-		CompanyElement element;
-
 		public CompanyTreeItem(CompanyElement element)
 		{
 			super(element);
@@ -132,8 +128,7 @@ public class RootLayoutController
 				@Override
 				public void notifyNameChanged()
 				{
-					// CompanyTreeItem.this.setValue(CompanyTreeItem.this.getValue());
-					treeRebuilder.onChanged(null);
+					treeView.refresh();
 				}
 			});
 
@@ -141,17 +136,17 @@ public class RootLayoutController
 					.forEach(item -> this.getChildren().add(item));
 		}
 
-		@Override
-		public ObservableList<CompanyTreeItem> getChildren()
+		public void removeAllChangeListeners()
 		{
-			return super.getChildren();
+			getValue().removeAllChangeListeners();
+			getChildren().stream().forEach(c -> ((CompanyTreeItem) c).removeAllChangeListeners());
 		}
 
 		@Override
 		protected void finalize() throws Throwable
 		{
-			element.removeListChangeListener(treeRebuilder);
-			this.getChildren().stream().forEach(c -> c.finalize());
+			getValue().removeListChangeListener(treeRebuilder);
+			removeAllChangeListeners();
 			super.finalize();
 		}
 	}
@@ -201,6 +196,10 @@ public class RootLayoutController
 	 */
 	private void rebuildTreeView()
 	{
+		if (treeView.getRoot() != null && treeView.getRoot().getChildren() != null)
+		{
+			treeView.getRoot().getChildren().stream().forEach(c -> ((CompanyTreeItem) c).removeAllChangeListeners());
+		}
 		TreeItem<CompanyElement> root = new TreeItem<>();
 		mainApp.getCompanyData().stream().forEach(company -> root.getChildren().add(new CompanyTreeItem(company)));
 		treeView.setRoot(root);

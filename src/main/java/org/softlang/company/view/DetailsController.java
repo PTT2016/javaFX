@@ -52,7 +52,15 @@ public class DetailsController
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
 			{
-				setElementSalary(newValue);
+				try
+				{
+					setElementSalary(newValue);
+				}
+				catch (NumberFormatException e)
+				{
+					if (currentElement != null)
+						salaryContent.setText(String.valueOf(((Employee) currentElement).getSalary()));
+				}
 			}
 		});
 		addressContent.textProperty().addListener(new ChangeListener<String>()
@@ -85,7 +93,7 @@ public class DetailsController
 			if (currentElement instanceof Employee)
 			{
 				// TODO: convert value
-				double salary = 0;
+				double salary = Double.valueOf(text);
 				((Employee) currentElement).setSalary(salary);
 			}
 		}

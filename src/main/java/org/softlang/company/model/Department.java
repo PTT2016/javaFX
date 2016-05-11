@@ -83,6 +83,10 @@ public class Department implements Cut, Total, Depth, CompanyElement
 		return 1 + depth;
 	}
 
+	/**
+	 * lists all the employees and all the departements
+	 * used for the access in the GUI
+	 */
 	@Override
 	public ObservableList<CompanyElement> getChildren()
 	{
@@ -92,6 +96,11 @@ public class Department implements Cut, Total, Depth, CompanyElement
 		return children;
 	}
 
+	/**
+	 * all changes in the structure of employees and departements are given to
+	 * the listener
+	 * used in the GUI
+	 */
 	@Override
 	public void addListChangeListener(ListChangeListener<CompanyElement> listener)
 	{
@@ -99,6 +108,9 @@ public class Department implements Cut, Total, Depth, CompanyElement
 		departments.addListener(listener);
 	}
 
+	/**
+	 * removes the listener if not needed anymore
+	 */
 	@Override
 	public void removeListChangeListener(ListChangeListener<CompanyElement> listener)
 	{

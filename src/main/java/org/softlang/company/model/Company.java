@@ -51,7 +51,7 @@ public class Company implements Cut, Total, Depth, CompanyElement
 	 */
 	@Override
 	public double total()
-	{
+	{ // stream().reduce() is like a fold in haskell
 		Double emp = employees.stream().reduce(0D, (a, d) -> a + d.total(), (a, d) -> a + d);
 		Double dep = departments.stream().reduce(0D, (a, d) -> a + d.total(), (a, d) -> a + d);
 		return emp + dep;
@@ -63,7 +63,7 @@ public class Company implements Cut, Total, Depth, CompanyElement
 	 */
 	@Override
 	public void cut()
-	{
+	{ // stream().forEach(...) is like a map in haskell with void results
 		employees.stream().forEach(d -> d.cut());
 		departments.stream().forEach(d -> d.cut());
 	}
@@ -86,6 +86,10 @@ public class Company implements Cut, Total, Depth, CompanyElement
 		return getName();
 	}
 
+	/**
+	 * lists all the employees and all the departements
+	 * used for the access in the GUI
+	 */
 	@Override
 	public ObservableList<CompanyElement> getChildren()
 	{
@@ -95,6 +99,11 @@ public class Company implements Cut, Total, Depth, CompanyElement
 		return children;
 	}
 
+	/**
+	 * all changes in the structure of employees and departements are given to
+	 * the listener
+	 * used in the GUI
+	 */
 	@Override
 	public void addListChangeListener(ListChangeListener<CompanyElement> listener)
 	{
@@ -102,10 +111,14 @@ public class Company implements Cut, Total, Depth, CompanyElement
 		departments.addListener(listener);
 	}
 
+	/**
+	 * removes the listener if not needed anymore
+	 */
 	@Override
 	public void removeListChangeListener(ListChangeListener<CompanyElement> listener)
 	{
 		employees.removeListener(listener);
+
 		departments.removeListener(listener);
 	}
 

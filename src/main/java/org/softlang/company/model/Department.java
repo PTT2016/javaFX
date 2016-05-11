@@ -24,16 +24,6 @@ public class Department extends CompanyElement implements Cut, Total, Depth
 		return employees;
 	}
 
-	public void addDepts(Department d)
-	{
-		this.departments.add(d);
-	}
-
-	public void addEmployees(Employee e)
-	{
-		this.employees.add(e);
-	}
-
 	/**
 	 * sum up the salaries of all employees of a specific departement
 	 *

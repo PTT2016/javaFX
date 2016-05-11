@@ -27,11 +27,6 @@ public class Company extends CompanyElement implements Cut, Total, Depth
 		return departments;
 	}
 
-	public void addDepartments(Department d)
-	{
-		this.departments.add(d);
-	}
-
 	/**
 	 * sums up the salaries of all employees of the company in a functional
 	 * manner

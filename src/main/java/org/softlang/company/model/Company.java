@@ -1,7 +1,15 @@
 package org.softlang.company.model;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+
 import org.softlang.company.feature.Cut;
 import org.softlang.company.feature.Depth;
+import org.softlang.company.feature.Serialization;
 import org.softlang.company.feature.Total;
 
 import javafx.collections.FXCollections;
@@ -11,7 +19,7 @@ import javafx.collections.ObservableList;
 /**
  * A company has a name and consists of (possibly nested) departments.
  */
-public class Company extends CompanyElement implements Cut, Total, Depth
+public class Company extends CompanyElement implements Cut, Total, Depth, Serialization<Company>
 {
 
 	private ObservableList<Employee> employees = FXCollections.observableArrayList();
@@ -104,6 +112,23 @@ public class Company extends CompanyElement implements Cut, Total, Depth
 		employees.removeListener(listener);
 
 		departments.removeListener(listener);
+	}
+
+	@Override
+	public Company deserialize(File in) throws IOException
+	{
+		BufferedReader br = new BufferedReader(new FileReader(in));
+		Company result = GSON.fromJson(br, Company.class);
+		return result;
+	}
+
+	@Override
+	public void serialize(File out) throws IOException
+	{
+		try (Writer writer = new FileWriter(out))
+		{
+			GSON.toJson(this, writer);
+		}
 	}
 
 }

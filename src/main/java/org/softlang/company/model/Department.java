@@ -1,14 +1,22 @@
 package org.softlang.company.model;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+
 import org.softlang.company.feature.Cut;
 import org.softlang.company.feature.Depth;
+import org.softlang.company.feature.Serialization;
 import org.softlang.company.feature.Total;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
-public class Department extends CompanyElement implements Cut, Total, Depth
+public class Department extends CompanyElement implements Cut, Total, Depth, Serialization<Department>
 {
 
 	private ObservableList<Department> departments = FXCollections.observableArrayList();
@@ -100,6 +108,23 @@ public class Department extends CompanyElement implements Cut, Total, Depth
 	public String toString()
 	{
 		return getName();
+	}
+
+	@Override
+	public Department deserialize(File in) throws IOException
+	{
+		BufferedReader br = new BufferedReader(new FileReader(in));
+		Department result = GSON.fromJson(br, Department.class);
+		return result;
+	}
+
+	@Override
+	public void serialize(File out) throws IOException
+	{
+		try (Writer writer = new FileWriter(out))
+		{
+			GSON.toJson(this, writer);
+		}
 	}
 
 }

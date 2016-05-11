@@ -1,12 +1,21 @@
 package org.softlang.company;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
+import java.lang.reflect.Type;
 
+import org.softlang.company.feature.Serialization;
 import org.softlang.company.model.Company;
 import org.softlang.company.model.Department;
 import org.softlang.company.model.Employee;
 import org.softlang.company.view.DetailsController;
 import org.softlang.company.view.RootLayoutController;
+
+import com.google.gson.reflect.TypeToken;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -17,7 +26,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
-public class MainApp extends Application
+public class MainApp extends Application implements Serialization<ObservableList<Company>>
 {
 
 	private Stage primaryStage;
@@ -25,6 +34,8 @@ public class MainApp extends Application
 	private ObservableList<Company> companyData = FXCollections.observableArrayList();
 
 	private DetailsController detailsController;
+
+	File input = new File("input.json");
 
 	/**
 	 * Entry Point defined by javafx Application.
@@ -40,13 +51,42 @@ public class MainApp extends Application
 
 			initRootLayout();
 
-			// Create sample data
-			companyData.add(exampleCompany("Company 1"));
-			companyData.add(exampleCompany("Company 2"));
+			if (input.exists())
+			{
+				// try to load from input file
+				try
+				{
+					deserialize(input);
+				}
+				catch (IOException e)
+				{
+					System.err.println("Unable to deserialize from " + input);
+				}
+			}
+
+			if (companyData.size() == 0)
+			{
+				// Create sample data
+				companyData.add(exampleCompany("Company 1"));
+				companyData.add(exampleCompany("Company 2"));
+			}
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void stop()
+	{
+		try
+		{
+			serialize(input);
+		}
+		catch (IOException e)
+		{
+			System.err.println("Not able to serialize to " + input);
 		}
 	}
 
@@ -162,6 +202,36 @@ public class MainApp extends Application
 		d1.getDepartments().add(d3);
 
 		return c;
+	}
+
+	@Override
+	public ObservableList<Company> deserialize(File in) throws IOException
+	{
+		// get generic type information from ObservableList<Company>
+		Type type = new TypeToken<ObservableList<Company>>()
+		{}.getType();
+
+		// read from file
+		ObservableList<Company> list = GSON.fromJson(new BufferedReader(new FileReader(in)), type);
+
+		// add list to companyData to keep listeners
+		if (list != null)
+		{
+			companyData.addAll(list);
+		}
+		System.out.println("Loaded " + list + " from " + in);
+
+		return companyData;
+	}
+
+	@Override
+	public void serialize(File out) throws IOException
+	{
+		try (Writer writer = new FileWriter(out))
+		{
+			GSON.toJson(companyData, writer);
+			System.out.println("Saved companies to " + out);
+		}
 	}
 
 }

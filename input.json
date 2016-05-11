@@ -1,0 +1,164 @@
+[
+  {
+    "employees": [],
+    "departments": [
+      {
+        "departments": [
+          {
+            "departments": [],
+            "employees": [
+              {
+                "salary": 200.0,
+                "name": "Biggy",
+                "listeners": [
+                  null
+                ]
+              },
+              {
+                "salary": 100.0,
+                "name": "Willy",
+                "listeners": [
+                  null
+                ]
+              }
+            ],
+            "name": "Department 3",
+            "listeners": [
+              null
+            ]
+          }
+        ],
+        "employees": [
+          {
+            "address": "D-55430 Oberwesel, Deutschland",
+            "salary": 600.0,
+            "name": "Steffen Kutscher",
+            "listeners": [
+              null
+            ]
+          },
+          {
+            "address": "Deutschland",
+            "salary": 500.0,
+            "name": "Lukas Christmann",
+            "listeners": [
+              null
+            ]
+          }
+        ],
+        "name": "Department 1",
+        "listeners": [
+          null
+        ]
+      },
+      {
+        "departments": [],
+        "employees": [
+          {
+            "salary": 300.0,
+            "name": "Pascal Lief",
+            "listeners": [
+              null
+            ]
+          },
+          {
+            "salary": 400.0,
+            "name": "Lars Erve",
+            "listeners": [
+              null
+            ]
+          }
+        ],
+        "name": "Department 2",
+        "listeners": [
+          null
+        ]
+      }
+    ],
+    "name": "Company 1",
+    "listeners": [
+      null
+    ]
+  },
+  {
+    "employees": [],
+    "departments": [
+      {
+        "departments": [
+          {
+            "departments": [],
+            "employees": [
+              {
+                "salary": 200.0,
+                "name": "Biggy",
+                "listeners": [
+                  null
+                ]
+              },
+              {
+                "salary": 100.0,
+                "name": "Willy",
+                "listeners": [
+                  null
+                ]
+              }
+            ],
+            "name": "Department 3",
+            "listeners": [
+              null
+            ]
+          }
+        ],
+        "employees": [
+          {
+            "address": "D-55430 Oberwesel, Deutschland",
+            "salary": 600.0,
+            "name": "Steffen Kutscher",
+            "listeners": [
+              null
+            ]
+          },
+          {
+            "address": "Deutschland",
+            "salary": 500.0,
+            "name": "Lukas Christmann",
+            "listeners": [
+              null
+            ]
+          }
+        ],
+        "name": "Department 1",
+        "listeners": [
+          null
+        ]
+      },
+      {
+        "departments": [],
+        "employees": [
+          {
+            "salary": 300.0,
+            "name": "Pascal Lief",
+            "listeners": [
+              null
+            ]
+          },
+          {
+            "salary": 400.0,
+            "name": "Lars Erve",
+            "listeners": [
+              null
+            ]
+          }
+        ],
+        "name": "Department 2",
+        "listeners": [
+          null
+        ]
+      }
+    ],
+    "name": "Company 2",
+    "listeners": [
+      null
+    ]
+  }
+]

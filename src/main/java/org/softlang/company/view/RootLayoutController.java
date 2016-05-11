@@ -17,6 +17,11 @@ public class RootLayoutController
 
 	private MainApp mainApp;
 
+	/**
+	 * A <code>TreeItem</code> that can contain a <code>CompanyElement</code>
+	 * and takes care of registering and unregistering Listeners in the Company
+	 * structure.
+	 */
 	public class CompanyTreeItem extends TreeItem<CompanyElement>
 	{
 		CompanyElement element;
@@ -39,21 +44,38 @@ public class RootLayoutController
 		}
 	}
 
+	/**
+	 * Called by javafx on initialization.
+	 */
 	@FXML
 	public void initialize()
 	{
 		System.out.println("RootLayoutController activated.");
+
+		// Hide the empty root above the different companies.
 		treeView.setShowRoot(false);
+
+		// Set a SelectionModel so the TreeView selection is linked to the
+		// Detail Panel
 		treeView.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> mainApp.showDetails(newValue.getValue()));
 	}
 
+	/**
+	 * Save the <code>MainApp</code> in this LayoutController to have access to
+	 * the Company structures.
+	 *
+	 * @param app
+	 */
 	public void setMainApp(MainApp app)
 	{
 		this.mainApp = app;
 		app.getCompanyData().addListener(treeRebuilder);
 	}
 
+	/**
+	 * Recreates contents of the <code>TreeView</code> from the Company data.
+	 */
 	private void rebuildTreeView()
 	{
 		TreeItem<CompanyElement> root = new TreeItem<>();

@@ -1,5 +1,10 @@
 package org.softlang.company.view;
 
+import org.softlang.company.model.Company;
+import org.softlang.company.model.CompanyElement;
+import org.softlang.company.model.Department;
+import org.softlang.company.model.Employee;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -63,5 +68,68 @@ public class DetailsController
 	public void setSalary(String salary)
 	{
 		this.salaryContent.setText(salary);
+	}
+
+	/**
+	 * Set the current element to show in the Details panel.
+	 *
+	 * @param element the <code>CompanyElement</code> to show.
+	 */
+	public void showDetails(CompanyElement element)
+	{
+		// Dispatch to actual code
+		if (element == null)
+			clearDetails();
+		if (element instanceof Company)
+			showDetails((Company) element);
+		if (element instanceof Department)
+			showDetails((Department) element);
+		if (element instanceof Employee)
+			showDetails((Employee) element);
+	}
+
+	public void clearDetails()
+	{
+		setContentLayoutX(-1);
+		setTitle("");
+		setNameLabel("");
+		setName("");
+		setAddressLabel("");
+		setAddress("");
+		setSalaryLabel("");
+		setSalary("");
+	}
+
+	private void showDetails(Company company)
+	{
+		clearDetails();
+		String name = company.getName();
+		setTitle("Company");
+		setNameLabel("Name:");
+		setName(name == null ? "" : name);
+	}
+
+	private void showDetails(Department department)
+	{
+		clearDetails();
+		String name = department.getName();
+		setTitle("Department");
+		setNameLabel("Name:");
+		setName(name == null ? "" : name);
+	}
+
+	private void showDetails(Employee employee)
+	{
+		clearDetails();
+		String name = employee.getName();
+		String address = employee.getAddress();
+		String salary = "" + employee.getSalary();
+		setTitle("Employee");
+		setNameLabel("Name:");
+		setName(name == null ? "" : name);
+		setAddressLabel("Address:");
+		setAddress(address == null ? "" : address);
+		setSalaryLabel("Salary:");
+		setSalary(salary);
 	}
 }

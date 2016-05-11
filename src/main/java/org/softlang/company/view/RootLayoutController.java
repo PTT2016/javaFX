@@ -93,7 +93,7 @@ public class RootLayoutController
 		{
 			super.commitEdit(newValue);
 			System.out.println("commitEdit");
-			mainApp.showDetails(this.getItem());
+			mainApp.getDetailsController().showDetails(this.getItem());
 			stopEdit();
 		}
 
@@ -166,8 +166,8 @@ public class RootLayoutController
 
 		// Set a SelectionModel so the TreeView selection is linked to the
 		// Detail Panel
-		treeView.getSelectionModel().selectedItemProperty()
-				.addListener((observable, oldValue, newValue) -> mainApp.showDetails(newValue.getValue()));
+		treeView.getSelectionModel().selectedItemProperty().addListener(
+				(observable, oldValue, newValue) -> mainApp.getDetailsController().showDetails(newValue.getValue()));
 
 		// Set a CellFactory to enable editing.
 		treeView.setEditable(true);

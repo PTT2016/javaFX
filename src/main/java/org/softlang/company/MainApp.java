@@ -3,7 +3,6 @@ package org.softlang.company;
 import java.io.IOException;
 
 import org.softlang.company.model.Company;
-import org.softlang.company.model.CompanyElement;
 import org.softlang.company.model.Department;
 import org.softlang.company.model.Employee;
 import org.softlang.company.view.DetailsController;
@@ -25,7 +24,7 @@ public class MainApp extends Application
 
 	private ObservableList<Company> companyData = FXCollections.observableArrayList();
 
-	DetailsController detailsController;
+	private DetailsController detailsController;
 
 	/**
 	 * Entry Point defined by javafx Application.
@@ -69,7 +68,7 @@ public class MainApp extends Application
 			root.setCenter(details);
 
 			detailsController = fxmlLoader.getController();
-			clearDetails();
+			detailsController.clearDetails();
 
 			// Show scene with root layout and css
 			Scene scene = new Scene(root);
@@ -88,67 +87,14 @@ public class MainApp extends Application
 		return companyData;
 	}
 
-	/**
-	 * Set the current element to show in the Details panel.
-	 *
-	 * @param element the <code>CompanyElement</code> to show.
-	 */
-	public void showDetails(CompanyElement element)
+	public DetailsController getDetailsController()
 	{
-		// Dispatch to actual code
-		if (element == null)
-			clearDetails();
-		if (element instanceof Company)
-			showDetails((Company) element);
-		if (element instanceof Department)
-			showDetails((Department) element);
-		if (element instanceof Employee)
-			showDetails((Employee) element);
+		return detailsController;
 	}
 
-	private void clearDetails()
+	public void setDetailsController(DetailsController detailsController)
 	{
-		detailsController.setContentLayoutX(-1);
-		detailsController.setTitle("");
-		detailsController.setNameLabel("");
-		detailsController.setName("");
-		detailsController.setAddressLabel("");
-		detailsController.setAddress("");
-		detailsController.setSalaryLabel("");
-		detailsController.setSalary("");
-	}
-
-	private void showDetails(Company company)
-	{
-		clearDetails();
-		String name = company.getName();
-		detailsController.setTitle("Company");
-		detailsController.setNameLabel("Name:");
-		detailsController.setName(name == null ? "" : name);
-	}
-
-	private void showDetails(Department department)
-	{
-		clearDetails();
-		String name = department.getName();
-		detailsController.setTitle("Department");
-		detailsController.setNameLabel("Name:");
-		detailsController.setName(name == null ? "" : name);
-	}
-
-	private void showDetails(Employee employee)
-	{
-		clearDetails();
-		String name = employee.getName();
-		String address = employee.getAddress();
-		String salary = "" + employee.getSalary();
-		detailsController.setTitle("Employee");
-		detailsController.setNameLabel("Name:");
-		detailsController.setName(name == null ? "" : name);
-		detailsController.setAddressLabel("Address:");
-		detailsController.setAddress(address == null ? "" : address);
-		detailsController.setSalaryLabel("Salary:");
-		detailsController.setSalary(salary);
+		this.detailsController = detailsController;
 	}
 
 	/**

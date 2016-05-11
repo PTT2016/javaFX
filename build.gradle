@@ -45,6 +45,9 @@ jar {
 	manifest {
 		attributes 'Main-Class': 'org.softlang.company.MainApp'
 	}
+	
+	//include compile dependencies into the jar, stolen from stackoverflow
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
 }
 
 apply plugin: 'javafx-gradle-plugin'

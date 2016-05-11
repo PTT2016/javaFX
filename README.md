@@ -26,6 +26,7 @@ The contribution is split in the parts *feature*, *model* and *view*.
 ### Usage
 
 The contribution uses ***Technology:Gradle*** for building. ***Technology:Eclipse*** is supported.  
+"gradle jfxRun" directly starts the application, after a "gradle build" a runnable jar can be found under "build/libs/javaFX.jar"
 See https://github.com/101companies/101simplejava/blob/master/README.md. for more details.
 
 ## Metadata

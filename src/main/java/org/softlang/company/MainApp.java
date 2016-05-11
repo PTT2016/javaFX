@@ -27,16 +27,21 @@ public class MainApp extends Application
 
 	DetailsController detailsController;
 
+	/**
+	 * Entry Point defined by javafx Application.
+	 */
 	@Override
 	public void start(Stage primaryStage)
 	{
 		try
 		{
+			// Set Window Title
 			this.primaryStage = primaryStage;
 			primaryStage.setTitle("101Companies - Java FunctionalFX");
 
 			initRootLayout();
 
+			// Create sample data
 			companyData.add(exampleCompany("Company 1"));
 			companyData.add(exampleCompany("Company 2"));
 		}
@@ -83,8 +88,14 @@ public class MainApp extends Application
 		return companyData;
 	}
 
+	/**
+	 * Set the current element to show in the Details panel.
+	 *
+	 * @param element the <code>CompanyElement</code> to show.
+	 */
 	public void showDetails(CompanyElement element)
 	{
+		// Dispatch to actual code
 		if (element == null)
 			clearDetails();
 		if (element instanceof Company)
@@ -140,11 +151,24 @@ public class MainApp extends Application
 		detailsController.setSalary(salary);
 	}
 
+	/**
+	 * Entry point for the JVM
+	 *
+	 * @param args command line arguments that were given to the program.
+	 */
 	public static void main(String[] args)
 	{
+		// Hand over to javafx application
 		launch(args);
 	}
 
+	/**
+	 * Creates a sample Company containing the members of the Team in a fixed
+	 * structure, with name given as name.
+	 *
+	 * @param name the name of the new <code>Company</code>
+	 * @return a newly created Company
+	 */
 	Company exampleCompany(String name)
 	{
 		Company c = new Company();

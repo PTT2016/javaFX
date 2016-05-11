@@ -19,6 +19,12 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
+// Require java 1.8 for pseudo-functionality
+compileJava {
+  sourceCompatibility = '1.8'
+  targetCompatibility = '1.8'
+}
+
 // In this section you declare where to find the dependencies of your project
 repositories {
     // You can declare any Maven/Ivy/file repository here.
@@ -32,6 +38,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
+// Set a main class to execute when the jar is started
 jar {
 	manifest {
 		attributes 'Main-Class': 'org.softlang.company.MainApp'

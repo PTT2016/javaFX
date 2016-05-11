@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -8,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<FlowPane maxWidth="1.7976931348623157E308" orientation="VERTICAL" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.softlang.company.view.DetailsController">
+<FlowPane columnHalignment="CENTER" maxWidth="1.7976931348623157E308" orientation="VERTICAL" prefHeight="400.0" prefWidth="245.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.softlang.company.view.DetailsController">
 	<children>
 		<Label fx:id="title" text="Company" underline="true">
 			<font>
@@ -34,5 +35,22 @@
 				<TextField fx:id="salaryContent" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 			</children>
 		</GridPane>
+      <FlowPane alignment="CENTER" columnHalignment="CENTER">
+         <children>
+            <Label fx:id="depthLabel" text="Departement Depth:" />
+            <Label fx:id="depthContent" />
+         </children>
+      </FlowPane>
+      <FlowPane alignment="CENTER" columnHalignment="CENTER">
+         <children>
+            <Label fx:id="totalLabel" text="Total Salaries:" />
+            <Label fx:id="totalContent" />
+         </children>
+      </FlowPane>
+      <FlowPane alignment="CENTER">
+         <children>
+            <Button fx:id="cutButton" mnemonicParsing="false" text="Cut" />
+         </children>
+      </FlowPane>
 	</children>
 </FlowPane>

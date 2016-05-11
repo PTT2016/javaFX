@@ -7,7 +7,10 @@ import org.softlang.company.model.Employee;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -28,6 +31,16 @@ public class DetailsController
 	private Label salaryLabel;
 	@FXML
 	private TextField salaryContent;
+	@FXML
+	private Label depthLabel;
+	@FXML
+	private Label depthContent;
+	@FXML
+	private Label totalLabel;
+	@FXML
+	private Label totalContent;
+	@FXML
+	private Button cutButton;
 
 	private CompanyElement currentElement = null;
 
@@ -72,7 +85,36 @@ public class DetailsController
 				setElementAddress(newValue);
 			}
 		});
+		cutButton.setOnAction(new EventHandler<ActionEvent>()
+		{
 
+			@Override
+			public void handle(ActionEvent event)
+			{
+				cutCurrentElement();
+			}
+		});
+	}
+
+	private void cutCurrentElement()
+	{
+		if (currentElement != null)
+		{
+			currentElement.cut();
+			Double newTotal = null;
+			if (currentElement instanceof Company)
+			{
+				newTotal = ((Company) currentElement).total();
+			}
+			else if (currentElement instanceof Department)
+			{
+				newTotal = ((Department) currentElement).total();
+			}
+			if (newTotal != null)
+			{
+				showTotal(String.valueOf(newTotal));
+			}
+		}
 	}
 
 	private void setElementName(String text)
@@ -169,6 +211,20 @@ public class DetailsController
 		currentElement = element;
 	}
 
+	public void showDepth(String depth)
+	{
+		depthLabel.setVisible(true);
+		depthContent.setVisible(true);
+		depthContent.setText(depth);
+	}
+
+	public void showTotal(String total)
+	{
+		totalLabel.setVisible(true);
+		totalContent.setVisible(true);
+		totalContent.setText(total);
+	}
+
 	public void clearDetails()
 	{
 		currentElement = null;
@@ -177,10 +233,16 @@ public class DetailsController
 		nameLabel.setVisible(false);
 		addressLabel.setVisible(false);
 		salaryLabel.setVisible(false);
+		depthLabel.setVisible(false);
+		totalLabel.setVisible(false);
 
 		nameContent.setVisible(false);
 		addressContent.setVisible(false);
 		salaryContent.setVisible(false);
+		depthContent.setVisible(false);
+		totalContent.setVisible(false);
+
+		cutButton.setVisible(false);
 
 		setTitle("");
 	}
@@ -192,6 +254,9 @@ public class DetailsController
 
 		setTitle("Company");
 		setName(name == null ? "" : name);
+		showDepth(String.valueOf(company.departmentDepth()));
+		showTotal(String.valueOf(company.total()));
+		cutButton.setVisible(true);
 	}
 
 	private void showDetails(Department department)
@@ -201,6 +266,9 @@ public class DetailsController
 
 		setTitle("Department");
 		setName(name == null ? "" : name);
+		showDepth(String.valueOf(department.departmentDepth()));
+		showTotal(String.valueOf(department.total()));
+		cutButton.setVisible(true);
 	}
 
 	private void showDetails(Employee employee)
@@ -214,5 +282,6 @@ public class DetailsController
 		setName(name == null ? "" : name);
 		setAddress(address == null ? "" : address);
 		setSalary(salary);
+		cutButton.setVisible(true);
 	}
 }

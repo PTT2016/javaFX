@@ -3,11 +3,13 @@ package org.softlang.company.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.softlang.company.feature.Cut;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
-public abstract class CompanyElement
+public abstract class CompanyElement implements Cut
 {
 	public ObservableList<CompanyElement> getChildren()
 	{

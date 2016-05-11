@@ -169,7 +169,7 @@ public class MainApp extends Application
 	 * @param name the name of the new <code>Company</code>
 	 * @return a newly created Company
 	 */
-	Company exampleCompany(String name)
+	public static Company exampleCompany(String name)
 	{
 		Company c = new Company();
 		c.setName(name);

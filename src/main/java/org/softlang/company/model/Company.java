@@ -28,11 +28,6 @@ public class Company implements Cut, Total, Depth, CompanyElement
 		return departments;
 	}
 
-	public void addDepartments(Department d)
-	{
-		this.departments.add(d);
-	}
-
 	public String getName()
 	{
 		return name;

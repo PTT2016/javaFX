@@ -26,16 +26,6 @@ public class Department implements Cut, Total, Depth, CompanyElement
 		return employees;
 	}
 
-	public void addDepts(Department d)
-	{
-		this.departments.add(d);
-	}
-
-	public void addEmployees(Employee e)
-	{
-		this.employees.add(e);
-	}
-
 	public void setName(String name)
 	{
 		this.name = name;

@@ -102,6 +102,7 @@ public class DetailsController
 		{
 			currentElement.cut();
 			Double newTotal = null;
+
 			if (currentElement instanceof Company)
 			{
 				newTotal = ((Company) currentElement).total();
@@ -113,6 +114,11 @@ public class DetailsController
 			if (newTotal != null)
 			{
 				showTotal(String.valueOf(newTotal));
+			}
+
+			if (currentElement instanceof Employee)
+			{
+				salaryContent.setText(String.valueOf(((Employee) currentElement).getSalary()));
 			}
 		}
 	}

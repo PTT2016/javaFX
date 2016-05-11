@@ -34,13 +34,14 @@ public class RootLayoutController
 		@Override
 		public void startEdit()
 		{
-			// TODO Auto-generated method stub
 			super.startEdit();
 
 			makeTextField();
 
 			setText(null);
 			setGraphic(edit);
+			edit.setText(getItem().toString());
+			edit.requestFocus();
 			edit.selectAll();
 		}
 
@@ -75,7 +76,7 @@ public class RootLayoutController
 						if (t.getCode() == KeyCode.ENTER)
 						{
 							updateItemName(edit.getText());
-							cancelEdit();
+							commitEdit(getItem());
 						}
 						else if (t.getCode() == KeyCode.ESCAPE)
 						{
@@ -92,6 +93,8 @@ public class RootLayoutController
 		{
 			super.commitEdit(newValue);
 			System.out.println("commitEdit");
+			mainApp.showDetails(this.getItem());
+			stopEdit();
 		}
 
 		@Override
@@ -99,6 +102,11 @@ public class RootLayoutController
 		{
 			super.cancelEdit();
 			System.out.println("cancelEdit");
+			stopEdit();
+		}
+
+		private void stopEdit()
+		{
 			setText(getItem().toString());
 			setGraphic(null);
 		}

@@ -3,21 +3,10 @@ package org.softlang.company.model;
 import org.softlang.company.feature.Cut;
 import org.softlang.company.feature.Total;
 
-public class Employee implements Cut, Total, CompanyElement
+public class Employee extends CompanyElement implements Cut, Total
 {
-	String name;
 	String address;
-	Double salary;
-
-	public String getName()
-	{
-		return name;
-	}
-
-	public void setName(String name)
-	{
-		this.name = name;
-	}
+	double salary;
 
 	public String getAddress()
 	{
@@ -29,19 +18,19 @@ public class Employee implements Cut, Total, CompanyElement
 		this.address = address;
 	}
 
-	public Double getSalary()
+	public double getSalary()
 	{
 		return salary;
 	}
 
-	public void setSalary(Double salary)
+	public void setSalary(double salary)
 	{
 		this.salary = salary;
 	}
 
 	/**
 	 * the salary of a single employee
-	 * 
+	 *
 	 * @return the salary
 	 */
 	@Override

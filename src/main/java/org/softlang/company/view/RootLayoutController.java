@@ -1,12 +1,11 @@
 package org.softlang.company.view;
 
 import org.softlang.company.MainApp;
-import org.softlang.company.model.Company;
 import org.softlang.company.model.CompanyElement;
-import org.softlang.company.model.Department;
-import org.softlang.company.model.Employee;
+import org.softlang.company.model.NameChangeListener;
 
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -26,7 +25,6 @@ public class RootLayoutController
 		@Override
 		protected void updateItem(CompanyElement item, boolean empty)
 		{
-			// TODO Auto-generated method stub
 			super.updateItem(item, empty);
 			setText(item == null ? "" : item.toString());
 		}
@@ -47,19 +45,7 @@ public class RootLayoutController
 
 		private void updateItemName(String newName)
 		{
-			CompanyElement item = getItem();
-			if (item instanceof Company)
-			{
-				((Company) item).setName(newName);
-			}
-			if (item instanceof Department)
-			{
-				((Department) item).setName(newName);
-			}
-			if (item instanceof Employee)
-			{
-				((Employee) item).setName(newName);
-			}
+			getItem().setName(newName);;
 		}
 
 		private void makeTextField()
@@ -140,15 +126,32 @@ public class RootLayoutController
 			super(element);
 			this.setExpanded(true);
 			element.addListChangeListener(treeRebuilder);
+			element.addChangeListener(new NameChangeListener()
+			{
+
+				@Override
+				public void notifyNameChanged()
+				{
+					// CompanyTreeItem.this.setValue(CompanyTreeItem.this.getValue());
+					treeRebuilder.onChanged(null);
+				}
+			});
 
 			element.getChildren().stream().map(child -> new CompanyTreeItem(child))
 					.forEach(item -> this.getChildren().add(item));
 		}
 
 		@Override
+		public ObservableList<CompanyTreeItem> getChildren()
+		{
+			return super.getChildren();
+		}
+
+		@Override
 		protected void finalize() throws Throwable
 		{
 			element.removeListChangeListener(treeRebuilder);
+			this.getChildren().stream().forEach(c -> c.finalize());
 			super.finalize();
 		}
 	}

@@ -8,10 +8,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
-public class Department implements Cut, Total, Depth, CompanyElement
+public class Department extends CompanyElement implements Cut, Total, Depth
 {
-
-	private String name = "";
 
 	private ObservableList<Department> departments = FXCollections.observableArrayList();
 	private ObservableList<Employee> employees = FXCollections.observableArrayList();
@@ -34,16 +32,6 @@ public class Department implements Cut, Total, Depth, CompanyElement
 	public void addEmployees(Employee e)
 	{
 		this.employees.add(e);
-	}
-
-	public void setName(String name)
-	{
-		this.name = name;
-	}
-
-	public String getName()
-	{
-		return name;
 	}
 
 	/**

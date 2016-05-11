@@ -1,22 +1,58 @@
 package org.softlang.company.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
-public interface CompanyElement
+public abstract class CompanyElement
 {
-	default ObservableList<CompanyElement> getChildren()
+	public ObservableList<CompanyElement> getChildren()
 	{
 		return FXCollections.observableArrayList();
 	}
 
-	default void addListChangeListener(ListChangeListener<CompanyElement> treeRebuilder)
+	private String name;
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public void setName(String name)
+	{
+		if (this.name == null || !this.name.equals(name))
+		{
+			this.name = name;
+			notifyNameChange();
+		}
+	}
+
+	private Set<NameChangeListener> listeners = new HashSet<>();
+
+	public boolean addChangeListener(NameChangeListener l)
+	{
+		return listeners.add(l);
+	}
+
+	public boolean removeChangeListener(NameChangeListener l)
+	{
+		return listeners.remove(l);
+	}
+
+	public void notifyNameChange()
+	{
+		listeners.stream().forEach(l -> l.notifyNameChanged());
+	}
+
+	public void addListChangeListener(ListChangeListener<CompanyElement> treeRebuilder)
 	{
 		return;
 	}
 
-	default void removeListChangeListener(ListChangeListener<CompanyElement> treeRebuilder)
+	public void removeListChangeListener(ListChangeListener<CompanyElement> treeRebuilder)
 	{
 		return;
 	}

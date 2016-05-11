@@ -11,10 +11,9 @@ import javafx.collections.ObservableList;
 /**
  * A company has a name and consists of (possibly nested) departments.
  */
-public class Company implements Cut, Total, Depth, CompanyElement
+public class Company extends CompanyElement implements Cut, Total, Depth
 {
 
-	private String name;
 	private ObservableList<Employee> employees = FXCollections.observableArrayList();
 	private ObservableList<Department> departments = FXCollections.observableArrayList();
 
@@ -31,16 +30,6 @@ public class Company implements Cut, Total, Depth, CompanyElement
 	public void addDepartments(Department d)
 	{
 		this.departments.add(d);
-	}
-
-	public String getName()
-	{
-		return name;
-	}
-
-	public void setName(String name)
-	{
-		this.name = name;
 	}
 
 	/**

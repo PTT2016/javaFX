@@ -5,8 +5,11 @@ import org.softlang.company.model.CompanyElement;
 import org.softlang.company.model.Department;
 import org.softlang.company.model.Employee;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 public class DetailsController
 {
@@ -16,15 +19,88 @@ public class DetailsController
 	@FXML
 	private Label nameLabel;
 	@FXML
-	private Label nameContent;
+	private TextField nameContent;
 	@FXML
 	private Label addressLabel;
 	@FXML
-	private Label addressContent;
+	private TextField addressContent;
 	@FXML
 	private Label salaryLabel;
 	@FXML
-	private Label salaryContent;
+	private TextField salaryContent;
+
+	private CompanyElement currentElement = null;
+
+	/**
+	 * Called by javafx on initialization.
+	 */
+	@FXML
+	public void initialize()
+	{
+		nameContent.textProperty().addListener(new ChangeListener<String>()
+		{
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+			{
+				setElementName(newValue);
+			}
+		});
+		salaryContent.textProperty().addListener(new ChangeListener<String>()
+		{
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+			{
+				setElementSalary(newValue);
+			}
+		});
+		addressContent.textProperty().addListener(new ChangeListener<String>()
+		{
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+			{
+				setElementAddress(newValue);
+			}
+		});
+
+	}
+
+	private void setElementName(String text)
+	{
+		if (currentElement != null)
+		{
+			if (!text.equals(currentElement.getName()))
+			{
+				currentElement.setName(text);
+			}
+		}
+	}
+
+	private void setElementSalary(String text)
+	{
+		if (currentElement != null)
+		{
+			if (currentElement instanceof Employee)
+			{
+				// TODO: convert value
+				double salary = 0;
+				((Employee) currentElement).setSalary(salary);
+			}
+		}
+	}
+
+	private void setElementAddress(String text)
+	{
+		if (currentElement != null)
+		{
+			if (currentElement instanceof Employee)
+			{
+				((Employee) currentElement).setAddress(text);
+			}
+		}
+	}
 
 	public void setContentLayoutX(double layoutX)
 	{
@@ -40,34 +116,25 @@ public class DetailsController
 		this.title.setText(title);
 	}
 
-	public void setNameLabel(String label)
-	{
-		this.nameLabel.setText(label);
-	}
-
 	public void setName(String name)
 	{
 		this.nameContent.setText(name);
-	}
-
-	public void setAddressLabel(String label)
-	{
-		this.addressLabel.setText(label);
+		this.nameLabel.setVisible(true);
+		this.nameContent.setVisible(true);
 	}
 
 	public void setAddress(String address)
 	{
 		this.addressContent.setText(address);
-	}
-
-	public void setSalaryLabel(String label)
-	{
-		this.salaryLabel.setText(label);
+		this.addressLabel.setVisible(true);
+		this.addressContent.setVisible(true);
 	}
 
 	public void setSalary(String salary)
 	{
 		this.salaryContent.setText(salary);
+		this.salaryLabel.setVisible(true);
+		this.salaryContent.setVisible(true);
 	}
 
 	/**
@@ -77,35 +144,45 @@ public class DetailsController
 	 */
 	public void showDetails(CompanyElement element)
 	{
+		currentElement = null;
 		// Dispatch to actual code
 		if (element == null)
+		{
 			clearDetails();
-		if (element instanceof Company)
+			return;
+		}
+		else if (element instanceof Company)
 			showDetails((Company) element);
-		if (element instanceof Department)
+		else if (element instanceof Department)
 			showDetails((Department) element);
-		if (element instanceof Employee)
+		else if (element instanceof Employee)
 			showDetails((Employee) element);
+
+		currentElement = element;
 	}
 
 	public void clearDetails()
 	{
+		currentElement = null;
 		setContentLayoutX(-1);
+
+		nameLabel.setVisible(false);
+		addressLabel.setVisible(false);
+		salaryLabel.setVisible(false);
+
+		nameContent.setVisible(false);
+		addressContent.setVisible(false);
+		salaryContent.setVisible(false);
+
 		setTitle("");
-		setNameLabel("");
-		setName("");
-		setAddressLabel("");
-		setAddress("");
-		setSalaryLabel("");
-		setSalary("");
 	}
 
 	private void showDetails(Company company)
 	{
 		clearDetails();
 		String name = company.getName();
+
 		setTitle("Company");
-		setNameLabel("Name:");
 		setName(name == null ? "" : name);
 	}
 
@@ -113,8 +190,8 @@ public class DetailsController
 	{
 		clearDetails();
 		String name = department.getName();
+
 		setTitle("Department");
-		setNameLabel("Name:");
 		setName(name == null ? "" : name);
 	}
 
@@ -124,12 +201,10 @@ public class DetailsController
 		String name = employee.getName();
 		String address = employee.getAddress();
 		String salary = "" + employee.getSalary();
+
 		setTitle("Employee");
-		setNameLabel("Name:");
 		setName(name == null ? "" : name);
-		setAddressLabel("Address:");
 		setAddress(address == null ? "" : address);
-		setSalaryLabel("Salary:");
 		setSalary(salary);
 	}
 }

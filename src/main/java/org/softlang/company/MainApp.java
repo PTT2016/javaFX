@@ -13,8 +13,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
 public class MainApp extends Application
@@ -64,7 +64,7 @@ public class MainApp extends Application
 
 			// Load details panel fxml
 			fxmlLoader = new FXMLLoader(ClassLoader.getSystemResource("org/softlang/company/view/DetailsLayout.fxml"));
-			AnchorPane details = fxmlLoader.load();
+			FlowPane details = fxmlLoader.load();
 			root.setCenter(details);
 
 			detailsController = fxmlLoader.getController();

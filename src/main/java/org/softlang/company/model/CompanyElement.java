@@ -32,7 +32,7 @@ public abstract class CompanyElement implements Cut
 		}
 	}
 
-	private Set<NameChangeListener> listeners = new HashSet<>();
+	transient private Set<NameChangeListener> listeners = new HashSet<>();
 
 	public boolean addChangeListener(NameChangeListener l)
 	{

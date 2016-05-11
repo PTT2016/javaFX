@@ -168,7 +168,6 @@ public class RootLayoutController
 			@Override
 			public TreeCell<CompanyElement> call(TreeView<CompanyElement> param)
 			{
-				// TODO Auto-generated method stub
 				return new CompanyElementTreeCellImpl();
 			}
 		});

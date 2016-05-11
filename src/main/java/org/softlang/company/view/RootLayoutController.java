@@ -1,15 +1,116 @@
 package org.softlang.company.view;
 
 import org.softlang.company.MainApp;
+import org.softlang.company.model.Company;
 import org.softlang.company.model.CompanyElement;
+import org.softlang.company.model.Department;
+import org.softlang.company.model.Employee;
 
 import javafx.collections.ListChangeListener;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.util.Callback;
 
 public class RootLayoutController
 {
+	private final class CompanyElementTreeCellImpl extends TreeCell<CompanyElement>
+	{
+		private TextField edit;
+
+		@Override
+		protected void updateItem(CompanyElement item, boolean empty)
+		{
+			// TODO Auto-generated method stub
+			super.updateItem(item, empty);
+			setText(item == null ? "" : item.toString());
+		}
+
+		@Override
+		public void startEdit()
+		{
+			// TODO Auto-generated method stub
+			super.startEdit();
+
+			makeTextField();
+
+			setText(null);
+			setGraphic(edit);
+			edit.selectAll();
+		}
+
+		private void updateItemName(String newName)
+		{
+			CompanyElement item = getItem();
+			if (item instanceof Company)
+			{
+				((Company) item).setName(newName);
+			}
+			if (item instanceof Department)
+			{
+				((Department) item).setName(newName);
+			}
+			if (item instanceof Employee)
+			{
+				((Employee) item).setName(newName);
+			}
+		}
+
+		private void makeTextField()
+		{
+			if (edit == null)
+			{
+				edit = new TextField();
+				edit.setOnKeyReleased(new EventHandler<KeyEvent>()
+				{
+
+					@Override
+					public void handle(KeyEvent t)
+					{
+						if (t.getCode() == KeyCode.ENTER)
+						{
+							updateItemName(edit.getText());
+							cancelEdit();
+						}
+						else if (t.getCode() == KeyCode.ESCAPE)
+						{
+							cancelEdit();
+						}
+					}
+
+				});
+			}
+		}
+
+		@Override
+		public void commitEdit(CompanyElement newValue)
+		{
+			super.commitEdit(newValue);
+			System.out.println("commitEdit");
+		}
+
+		@Override
+		public void cancelEdit()
+		{
+			super.cancelEdit();
+			System.out.println("cancelEdit");
+			setText(getItem().toString());
+			setGraphic(null);
+		}
+
+		@Override
+		public String toString()
+		{
+			// TODO Auto-generated method stub
+			return getItem().toString();
+		}
+	}
+
 	@FXML
 	private TreeView<CompanyElement> treeView;
 
@@ -59,6 +160,18 @@ public class RootLayoutController
 		// Detail Panel
 		treeView.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> mainApp.showDetails(newValue.getValue()));
+
+		// Set a CellFactory to enable editing.
+		treeView.setEditable(true);
+		treeView.setCellFactory(new Callback<TreeView<CompanyElement>, TreeCell<CompanyElement>>()
+		{
+			@Override
+			public TreeCell<CompanyElement> call(TreeView<CompanyElement> param)
+			{
+				// TODO Auto-generated method stub
+				return new CompanyElementTreeCellImpl();
+			}
+		});
 	}
 
 	/**
